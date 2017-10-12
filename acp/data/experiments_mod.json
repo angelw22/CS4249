@@ -1,0 +1,88 @@
+{
+    "techniques": [
+        {
+            "t":["TRADITIONAL", "AUTOCOMPASTE"],
+            "description": "T1"
+        },
+        {
+            "t":["AUTOCOMPASTE", "TRADITIONAL"],
+            "description": "T2"
+        }
+    ],
+    "granularity": [
+        {
+            "g": ["phrase", "sentence", "paragraph"],
+            "description": "G1"
+        },
+        {
+            "g": ["sentence", "paragraph", "phrase"],
+            "description": "G2"
+        },
+        {
+            "g": ["paragraph", "phrase", "sentence"],
+            "description": "G3"
+        }
+    ],
+    "visibility": [
+        {
+            "v":["visible", "invisible"],
+            "description": "V1"
+        },
+        {
+            "v":["invisible", "visible"],
+            "description": "V2"
+        }
+    ],
+    "blocks": [
+        {
+            "order":["0", "1", "2"]   
+        },
+        {
+            "order":["1", "2", "0"]
+        }
+    ],
+    "trials": {
+        "phrase": [
+            {
+                "stimuli": "number of positive charges",
+                "description": "Pe T0"
+            },
+            {
+                "stimuli": "Magnitude or size of a signal",
+                "description": "Pe T1"
+            },
+            {
+                "stimuli": "Relating to frequencies",
+                "description": "Pe T2"
+            }
+        ],
+        "sentence": [
+            {
+                "stimuli": "What is ampere? Unit of electrical current. 12 is the number",
+                "description": "S T0"
+            },
+            {
+                "stimuli": "What is attenuate? To reduce the amplitude of an action or signal. The opposite of amplification.",
+                "description": "S T1"
+            },
+            {
+                "stimuli": "What is bandwidth? Width of the band of frequencies between the half power points.",
+                "description": "S T2"
+            }
+        ],
+        "paragraph": [
+            {
+                "stimuli": "What is bistable multivibrator? A multi vibrator with two stable states. An external signal is required to change the output from one state to the other. Also called a latch.",
+                "description": "Ph T0"
+            },
+            {
+                "stimuli": "Traditionally in English, an article is usually considered to be a type of adjective. In some languages, articles are a special part of speech, which cannot easily be combined with other parts of speech. It is also possible for articles to be part of another part of speech category such as a determiner, an English part of speech category that combines articles and demonstratives (such as 'this' and 'that').",
+                "description": "Ph T1"
+            },
+            {
+                "stimuli": "In languages that employ articles, every common noun, with some exceptions, is expressed with a certain definiteness, just as many languages express every noun with a certain grammatical number. Every noun must be accompanied by the article, if any, corresponding to its definiteness, and the lack of an article (considered a zero article) itself specifies a certain definiteness. This is in contrast to other adjectives and determiners, which are typically optional. This obligatory nature of articles makes them among the most common words in many languages - in English, for example, the most frequent word is the.",
+                "description": "Ph T2"
+            }
+        ]
+    }
+}

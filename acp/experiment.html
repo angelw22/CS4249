@@ -1,0 +1,183 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>CS4249 Assignment 1</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    </head>
+    <body class="experiment-page">
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.html">Welcome</a></li>
+                        <li><a href="questionnaire-pre.html">Pre Questionnaire</a></li>
+                        <li><a href="instructions.html">Instructions</a></li>
+                        <li class="active"><a href="experiment.html">Experiment</a></li>
+                        <li><a href="questionnaire-post.html">Post Questionnaire</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3">
+                    <h1>Copy-Paste Experiment</h1>
+                    <hr>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <!-- First Independent Variable-->
+                            <tr>
+                                <td>Technique</td>
+                                <td><span class="js-expt-technique">AutoComPaste</span></td>
+                            </tr>
+                            <!-- Second Independent Variable-->
+                            <tr>
+                                <td>Granularity</td>
+                                <td><span class="js-expt-granularity">Phrase</span></td>
+                            </tr>
+                            <!-- Third Independent Variable-->
+                            <tr>
+                                <td>Task Type</td>
+                                <td><span class="js-expt-task"></span></td>
+                            </tr>
+                             <tr>
+                                <td>Block</td>
+                                <td><span class="js-expt-current-block"></span></td>
+                            </tr>
+                            <tr>
+                                <td>Trial</td>
+                                <td><span class="js-expt-current-trial"></span> / <span class="js-expt-num-trials"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>Please copy-paste the following <span class="js-expt-granularity">phrase</span>s using the <span class="js-expt-technique">AUTOCOMPASTE</span> technique from one of the open windows.</p>
+                    <div id="stimuli" class="alert alert-danger js-expt-stimuli">This is a long stimuli!</div>
+                    <button class="btn btn-primary btn-lg" onclick="next()">Next Task</button>
+                </div>
+                <div id="autocompaste" class="col-sm-9">
+                    <div id="autocompaste-display"></div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/vendor/jquery-1.11.2.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/WindowManager.js"></script>
+        <script src="js/autocompaste/engine.js"></script>
+        <script src="js/autocompaste/interface.js"></script>
+        <script src="js/autocompaste/editor.js"></script>
+        <script src="js/autocompaste/autocompaste.js"></script>
+        <script src="js/DataStorage.js"></script>
+        <script src="js/ACPToolKit.js"></script>
+<!--        <script src="js/DynamicCondition.js"></script>-->
+        <script src="js/DynamicCondition2.js"></script>
+        <script>
+            
+            var trialsData;
+            var currentBlock;
+            var currentTrial;
+            var totalNumberOfTrials;
+            var headers = ['Participant id', 'Technique', 'Granularity', 'Task',
+                            'Block no', 'Trial no', 'Stimuli', 'User Response', 'Trial Start Time',
+                            'Trial End Time', 'Trial Time', 'Accuracy'];
+            var trialData = [];
+            var pid;
+
+            function next () {
+                if (currentTrial !== 0) {
+                    var trialResult = ACPToolKit.getCurrentTrialState();
+
+                    var technique = trialResult.technique;
+                    var granularity = trialResult.granularity;
+                    var task = trialResult.task;
+                    var trialNum = currentTrial;
+                    var stimuli = trialResult.stimuli;
+                    var userResponse = trialResult.user_response;
+                    var trialStartTime = trialResult.start_time;
+                    var trialEndTime = trialResult.end_time;
+                    var trialDuration = trialResult.duration;
+                    var accuracy = stimuli === userResponse ? 1 : 0;
+
+                    var row = [pid, technique, granularity, task, 
+                               currentBlock, trialNum,
+                                stimuli, userResponse, trialStartTime,
+                                trialEndTime, trialDuration, accuracy];
+                    trialData.push(row);
+                }
+
+                if (currentTrial < totalNumberOfTrials) {
+                    ACPToolKit.presentTrial(trialsData[currentTrial]);
+                    currentTrial += 1;
+                    $('.js-expt-current-trial').text(currentTrial);
+                } else {
+                    // Last trial completed
+                    ACPToolKit.downloadTrialResults(trialData);
+                    window.location = 'questionnaire-post.html';
+                }
+            }
+
+            $(document).ready(function () {
+                
+                $.get('data/experiments_mod_final.json', function (data) {
+                    
+                    pid = ACPToolKit.getCurrentParticipantId();
+                    
+                    // TEST
+                    
+                    currentBlock = ACPToolKit.getCurrentBlockNumber();
+                    $('.js-expt-current-block').text(currentBlock);
+                                   
+                    data = JSON.parse(data); 
+
+                    var techniques = data.techniques;
+                    var ivSecond = data.ivSecond;
+                    var ivThird = data.ivThird;
+                   
+                    DynamicCondition2.setNumberOfParticipants(12);
+                    DynamicCondition2.setNumberGroupTechniques(6);
+                    DynamicCondition2.setNumberGroupIvSecond(3);
+                    DynamicCondition2.setNumberGroupIvThird(3);
+                    
+                    var pOrders = DynamicCondition2.generateParticipantOrder(techniques, ivSecond, ivThird);
+                    
+                    DataStorage.setItem("porders", pOrders);
+
+                    var sOrder = DataStorage.getItem("porders")[pid - 1];
+                    
+                    
+
+                    var sConditions = DynamicCondition2.generateCondition(data.trials,
+                                                   data.techniques[sOrder.t_index].t, 
+                                                   data.ivSecond[sOrder.v_index].data, 
+                                                   data.ivThird[sOrder.g_index].data, 
+                                                   data.blocks[currentBlock].order);
+                    
+                    // END TEST
+                    
+                    trialsData = sConditions.experiments;
+//                    trialsData = data.experiments;
+                    currentTrial = 0;
+                    totalNumberOfTrials = trialsData.length;
+                    $('.js-expt-num-trials').text(totalNumberOfTrials);
+                    trialData.push(headers);
+                    next();
+//                    pid = ACPToolKit.getCurrentParticipantId();
+                })
+                
+            });
+        </script>
+    </body>
+</html>

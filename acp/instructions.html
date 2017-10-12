@@ -1,0 +1,91 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>CS4249 Assignment 1</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.html">Welcome</a></li>
+                        <li><a href="questionnaire-pre.html">Pre Questionnaire</a></li>
+                        <li class="active"><a href="instructions.html">Instructions</a></li>
+                        <li><a href="experiment.html">Experiment</a></li>
+                        <li><a href="questionnaire-post.html">Post Questionnaire</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h1>Instructions</h1>
+                    <hr>
+                    <p>Dear participant <span class="js-pid pid"></span>, please read the instructions before the experiment.
+
+                    <p>This experiment will require you to test out the copy and paste techniques AutoComPaste and the traditional copy-paste technique. 
+			      </p>
+                  <p>
+                    <strong>Traditional method</strong>
+					<p>
+					The traditional copy-paste technique refers to ctrl-C (win)/cmd-C(mac) to copy a selected chunk of text and ctrl-V (win)/cmd-V(mac) to paste it. 
+					</p>
+			  	  <p>
+					For both methods, you are required to look for the <font color="green"> stated phrase (green circle)</font> and paste it into the <font color="orange">Text Editor</font>. 
+                   	</p>
+                   	<p>
+                    <img src="img/Screen Shot 2017-09-13 at 8.30.07 PM.png" width=100% alt=""/>
+                    </p>
+                    <strong>"Autocompaste" method</strong>
+                    <p>
+                    When the technique stated on the left is “autocompaste”, you are required to execute the copy-paste using the autocompaste method.
+                    </p> 
+					How to:
+					<p>
+					1.	Type the first few words of the phrase, until a <font color="navy">selection of texts</font> appear. 
+                    </p>
+                    <p>
+                  <img src="img/Screen Shot 2017-09-13 at 8.30.21 PM.png" width=100% alt=""/></p>
+                  <p>
+                  	2.	Use the mouse to click on, or use the arrow keys and click enter to select the desired phrase.
+                  	<p>
+3.	Use the left and right arrow keys after selecting the phrase to decide whether to add the subsequent sentence or delete it.
+</p>
+                  </p>
+<form class="form-inline">
+        <button type="submit" class="btn btn-primary btn-lg">Next</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/vendor/jquery-1.11.2.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/DataStorage.js"></script>
+        <script src="js/ACPToolKit.js"></script>
+        <script src="js/main.js"></script>
+
+        <script>
+            $(function () {
+                $('form').submit(function (event) {
+                    event.preventDefault();
+                    window.location = 'experiment.html';
+                });
+            });
+        </script>
+    </body>
+</html>
